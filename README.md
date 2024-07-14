@@ -6,15 +6,15 @@
  HTML,
  CSS,
  JavaScript
------------------------
-Frameworks:
+
+## Frameworks:
 -----------------------
  Tensorflow,
  FastAPI
------------------------
-Content:
+
+## Content:
 -----------------------
  Clicker,
  Generate Anime Avatar (DCGAN),
  MNIST (CNN)
------------------------
+
