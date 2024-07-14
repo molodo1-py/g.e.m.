@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anime G.E.M.</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        
+        #titled {
+            position: fixed;
+            top: 18%;
+            left: 50%;
+            transform: translate(-50%, 0%);
+            text-align: center;
+            font-size: 25px;
+            color: white;
+            font-family: 'Roboto',Arial,sans-serif;
+        }
+        
+        #canvas-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 50vh;
+        }
+        #result {
+            border: 2px solid white;
+            z-index: 9999;
+        }
+        .buttons-mnist-container {
+			text-align: center;	
+		}
+    </style>
+</head>
+<body>
+    {% include 'header.html' %}
+    <div id="titled">
+        <p>ВАШ АВАТАР</p>
+    </div>
+    <div id="canvas-container">
+        <div id="result">
+            <img src="/static/noneava.webp" alt="Аватарка" width="280" height="280">
+        </div>
+    </div>
+    <div class="buttons-mnist-container">
+        <button class="buttons-mnist" id="gen-button">Сгенерировать аватар</button>
+    </div>
+    <script>
+        document.getElementById("gen-button").addEventListener('click', () => {
+            response = fetch("http://localhost:8000/anime_generate")
+        
+            .then((response) => {
+                return response.blob();
+            })
+            .then((blob) => {
+                const url = URL.createObjectURL(blob);
+                const resultImage = document.getElementById("result");
+                const img = new Image();
+                img.src = url;
+                img.width = 280;
+                img.height = 280;
+                resultImage.innerHTML = '';
+                resultImage.appendChild(img);
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+            });
+        });
+    </script>
+</body>
+</html>

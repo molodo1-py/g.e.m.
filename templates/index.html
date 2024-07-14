@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>G.E.M. Home</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    {% include 'header.html' %}
+    <section>
+        <div id="centered">
+            <div class="left">
+                <h3>Gem: <span class="gem-cost">0</span></h3>
+                <img src="/static/diamond.png" alt="" srcset="" class="gem-image" onclick="incrementGem()" draggable="false">
+            </div>
+            <div class="upgrade" onclick="buyClicker()">
+                <div class="left-section">
+                    <img src="/static/clickerup.png" alt="" class="upgrade-img">
+                </div>
+                <div class="mid-section">
+                    <h4>Clicker</h4>
+                <div class="cost-info">
+                    <p>Cost: <span class="clicker-cost">100</span></p>
+                    <img src="/static/diamond.png" alt="" srcset="" class="gem-img">
+                </div>
+            </div>
+            <div class="right-section">Level <span class="clicker-level">0</span></div>        
+                <div class="next-level-info">
+                    <p>
+                        +<span class="clicker-increase">1</span> gems <br /> per click
+                    </p>
+                </div>
+            </div>
+            <div class="upgrade" onclick="buyPick()">
+                <div class="left-section">
+                    <img src="/static/pick.png" alt="" class="upgrade-img">
+                </div>
+                <div class="mid-section">
+                    <h4>Pick</h4>
+                <div class="cost-info">
+                    <p>Cost: <span class="pick-cost">1000</span></p>
+                    <img src="/static/diamond.png" alt="" srcset="" class="gem-img">
+                </div>
+            </div>
+            <div class="right-section">Level <span class="pick-level">0</span></div>        
+                <div class="next-level-info">
+                    <p>
+                        +<span class="pick-increase">1</span> gems <br /> per second
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        let gem = document.querySelector(".gem-cost");
+        let parsedGem = parseFloat(gem.innerHTML);
+
+        let clickerCost = document.querySelector(".clicker-cost");
+        let parsedClickerCost = parseFloat(clickerCost.innerHTML);
+
+        let clickerLevel = document.querySelector(".clicker-level");
+        let clickerIncrease = document.querySelector(".clicker-increase");
+        let parsedClickerIncrease = parseFloat(clickerIncrease.innerHTML);
+
+        let pickLevel = document.querySelector(".pick-level");
+        let pickCost = document.querySelector(".pick-cost");
+        let parsedPickCost = parseFloat(pickCost.innerHTML);
+        let pickIncrease = document.querySelector(".pick-increase");
+        let parsedPickIncrease = parseFloat(pickIncrease.innerHTML);
+
+        let gpc = 1;
+        let gps = 1;
+
+        function incrementGem(){
+            //увеличение гемов от клика
+            gem.innerHTML = Math.round(parsedGem += gpc);
+        }
+
+        function buyClicker(){
+            //Покупка улучшенного кликера
+            if (parsedGem >= parsedClickerCost){
+                parsedGem -= parsedClickerCost;
+                gem.innerHTML = Math.round(parsedGem);
+            
+                clickerLevel.innerHTML ++;
+                parsedClickerIncrease = parsedClickerIncrease + 0.5;
+                clickerIncrease.innerHTML = parsedClickerIncrease;
+                gpc += parsedClickerIncrease;
+            }
+        }
+
+        function buyPick(){
+            //Покупка улучшенной кирки
+            if (parsedGem >= parsedPickCost){
+                parsedGem -= parsedPickCost;
+                gem.innerHTML = Math.round(parsedGem);
+            
+                pickLevel.innerHTML ++;
+                parsedPickIncrease ++;
+                pickIncrease.innerHTML = parsedPickIncrease;
+                gps += parsedPickIncrease;
+            }
+        }
+
+        setInterval(() => {
+            parsedGem += gps;
+            gem.innerHTML = Math.round(parsedGem)
+        }, 1000)
+    </script>
+</body>
+</html>
